@@ -48,108 +48,26 @@
   </section>
   <nav role="navigation" aria-label="pagination" class="mx-auto flex w-full justify-center mt-auto">
     <ul class="flex flex-row items-center gap-1">
-      <li class="">
-        <li class="">
-          <a
-            class="inline-flex items-center whitespace-nowrap shrink-0 justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-gray-100 hover:text-gray-900 h-8 px-3 py-2 gap-1 pl-2.5"
-            aria-label="Go to previous page"
-            href="#"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-4 w-4"
-            >
-              <path d="m15 18-6-6 6-6"></path>
-            </svg>
-            <span>Previous</span>
-          </a>
+      <!-- Previous page link -->
+      @if ($users->currentPage() > 1)
+        <li>
+          <a href="{{ $users->previousPageUrl() }}" class="pagination-link">&laquo; Previous</a>
         </li>
-      </li>
-      <li class="">
-        <li class="">
-          <a
-            class="inline-flex items-center whitespace-nowrap shrink-0 justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-gray-100 hover:text-gray-900 h-9 w-9"
-            href="#"
-          >
-            1
-          </a>
+      @endif
+
+      <!-- Pagination elements -->
+      @for ($i = 1; $i <= $users->lastPage(); $i++)
+        <li>
+          <a href="{{ $users->url($i) }}" class="pagination-link{{ ($i == $users->currentPage()) ? ' active' : '' }}">{{ $i }}</a>
         </li>
-      </li>
-      <li class="">
-        <li class="">
-          <a
-            aria-current="page"
-            class="inline-flex items-center whitespace-nowrap shrink-0 justify-center rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm font-medium hover:bg-accent hover:text-accent-foreground h-9 w-9"
-            href="#"
-          >
-            2
-          </a>
+      @endfor
+
+      <!-- Next page link -->
+      @if ($users->hasMorePages())
+        <li>
+          <a href="{{ $users->nextPageUrl() }}" class="pagination-link">Next &raquo;</a>
         </li>
-      </li>
-      <li class="">
-        <li class="">
-          <a
-            class="inline-flex items-center whitespace-nowrap shrink-0 justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-gray-100 hover:text-gray-900 h-9 w-9"
-            href="#"
-          >
-            3
-          </a>
-        </li>
-      </li>
-      <li class="">
-        <span aria-hidden="true" class="flex h-9 w-9 items-center justify-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-4 w-4"
-          >
-            <circle cx="12" cy="12" r="1"></circle>
-            <circle cx="19" cy="12" r="1"></circle>
-            <circle cx="5" cy="12" r="1"></circle>
-          </svg>
-          <span class="sr-only">More pages</span>
-        </span>
-      </li>
-      <li class="">
-        <li class="">
-          <a
-            class="inline-flex items-center whitespace-nowrap shrink-0 justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-gray-500 hover:bg-gray-100 hover:text-gray-900 h-8 px-3 py-2 gap-1 pr-2.5"
-            aria-label="Go to next page"
-            href="#"
-          >
-            <span>Next</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-4 w-4"
-            >
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
-          </a>
-        </li>
-      </li>
+      @endif
     </ul>
   </nav>
   <script>
