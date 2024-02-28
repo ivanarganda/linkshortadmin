@@ -14,11 +14,10 @@
 </head>
 
 <body>
-    <div class="flex flex-col h-screen">
+    <div class="flex flex-col mx-auto">
         @include('layouts/header')
-        <div class="flex flex-1 overflow-hidden">
+        <div class="flex flex-1">
             @include('layouts/sidebar')
-            
             @auth
                 @include('layouts/main-content')
             @else

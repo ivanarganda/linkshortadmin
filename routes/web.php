@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UrlsController;
+use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,9 @@ Route::resource('/users', UsersController::class);
 
 Route::resource('/urls', UrlsController::class);
 
-Route::get('/login', function(){
-    return view('form/login');
-});
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

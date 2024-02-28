@@ -27,52 +27,24 @@
             Role
           </th>
           <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-            Status
+            Registered
           </th>
         </tr>
       </thead>
       <tbody class="[&amp;_tr:last-child]:border-0">
-        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">John Doe</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">john.doe@example.com</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Admin</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Active</td>
-        </tr>
-        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Jane Smith</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">jane.smith@example.com</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">User</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Inactive</td>
-        </tr>
-        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Emma Johnson</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">emma.johnson@example.com</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">User</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Active</td>
-        </tr>
-        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Robert Brown</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">robert.brown@example.com</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Admin</td>
-          <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Active</td>
-        </tr>
-        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Robert Brown</td>
-            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">robert.brown@example.com</td>
-            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Admin</td>
-            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Active</td>
-        </tr>
-        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Robert Brown</td>
-        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">robert.brown@example.com</td>
-        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Admin</td>
-        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">Active</td>
-        </tr>
+        @foreach ( $users as $user )
+          <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{$user->name}}</td>
+            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{$user->email}}</td>
+            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{$user->type}}</td>
+            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{$user->registration_date}}</td>
+          </tr>
+        @endforeach
       </tbody>
     </table>
   </section>
-  <section class="w-full mt-10 md:w-3/4 lg:w-full mx-auto">
-    <canvas id="myChart" height="400"></canvas>
+  <section class="w-full mt-10 mb-5 md:w-3/4 lg:w-full mx-auto h-full">
+    <canvas id="myChart"></canvas>
   </section>
   <nav role="navigation" aria-label="pagination" class="mx-auto flex w-full justify-center mt-auto">
     <ul class="flex flex-row items-center gap-1">
@@ -187,7 +159,7 @@
         data: {
             labels: @json($labels),
             datasets: [{
-                label: 'Sample Data',
+                label: 'Registered Users',
                 data: @json($data),
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
