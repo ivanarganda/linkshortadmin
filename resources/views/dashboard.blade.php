@@ -23,9 +23,7 @@
             @else
                 @include('form/login')
             @endauth
-            
         </div>
     </div>
 </body>
-
 </html>
