@@ -1,12 +1,10 @@
 @extends('dashboard')
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 @section('title','Users')
 
 @section('main-content')
-  <main class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-semibold">Users</h1>
+  <main class="flex justify-between items-center mt-16 mb-6">
+    <h1 class="text-2xl font-semibold">List of users registered</h1>
     <input
       class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-64"
       placeholder="Filter users..."

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\StadisticUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Url;
+use Illuminate\Support\Facades\DB;
 
 class UrlsController extends Controller
 {
@@ -11,7 +15,20 @@ class UrlsController extends Controller
      */
     public function index()
     {
-        //
+        // Check if the user is authenticated
+        if (!Auth::check()) {
+            return redirect()->intended('/');
+        }
+
+        // Get URLs associated with the authenticated user
+        $urls = DB::table('urls')
+        ->select(DB::raw('DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date, url , short, description'))
+        ->paginate(5);
+
+        [ $labels , $data ] = $this->generateChart('urls');
+
+        // Return the view with the URLs
+        return view('urls', compact( 'labels' , 'data' , 'urls'));
     }
 
     /**
