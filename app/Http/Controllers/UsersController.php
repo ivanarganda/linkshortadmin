@@ -13,7 +13,7 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index( $search = false )
     {
 
         if ( !Auth::check() ){
@@ -21,8 +21,18 @@ class UsersController extends Controller
         }
         
         // Retrieve users grouped by registration date
-        $users = DB::table('users')
+        $users = !$search ? 
+            DB::table('users')
             ->select(DB::raw('DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date, name , email, type'))
+            ->where( 'type' , 'user' )
+            ->paginate(5) : 
+            
+            DB::table('users')
+            ->select(DB::raw('DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date, name , email, type'))
+            ->where('id', 'LIKE' , "%{$search}%")
+            ->orWhere('name', 'LIKE' , "%{$search}%")
+            ->orWhere('email', 'LIKE' , "%{$search}%")
+            ->where('type', 'user')
             ->paginate(5);
 
         // Fetch the email of the authenticated user

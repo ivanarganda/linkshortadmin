@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UrlsController;
 use App\Http\Controllers\AuthController;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\StatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,13 +21,14 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
-Route::resource('/users', UsersController::class);
+Route::get('/users/{search?}', [UsersController::class, 'index']);
+Route::get('/users/details/{detail}', [UsersController::class, 'show']);
 
 Route::resource('/urls', UrlsController::class);
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
-
 Route::post('/login', [AuthController::class, 'login']);
-
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::resource('/stats', StatsController::class);
 
