@@ -1,7 +1,7 @@
 @auth
     @if ( request()->is('/') )
         <script>
-            window.location.href = "{{ url('/users') }}";
+            window.location.href = "{{ url('/stats') }}";
         </script>
     @endif
 @endauth

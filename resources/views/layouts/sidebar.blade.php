@@ -1,8 +1,8 @@
 
 @auth
-    <aside id="sidebar" class="w-46 bg-gray-800 text-white p-6 overflow-auto fixed inset-y-0 -left-full lg:-left-0 z-10 transform md:translate-x-0 transition-transform duration-300 ease-in-out">
+    <aside id="sidebar" class="w-46 bg-gray-800 text-white p-6 overflow-auto fixed inset-y-0 -left-full lg:-left-0 z-10 transform md:translate-x-0 transition-all">
 @else 
-    <aside id="sidebar" class="w-46 bg-gray-800 text-white p-6 overflow-auto fixed inset-y-0 -left-full md:-left-0 z-10 transform md:translate-x-0 transition-transform duration-300 ease-in-out">
+    <aside id="sidebar" class="w-46 bg-gray-800 text-white p-6 overflow-auto fixed inset-y-0 -left-full md:-left-0 z-10 transform md:translate-x-0 transition-all">
 @endauth
 
     <nav class="space-y-10 mt-20">
