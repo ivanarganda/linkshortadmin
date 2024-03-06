@@ -8,31 +8,31 @@
     <h1 class="text-2xl font-semibold text-gray-600">List of shorts registered</h1>
     <input
         class="flex h-10 outline-none rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-48 md:w-64"
-        placeholder="Filter users..."
+        placeholder="Filter shorts..."
         type="search"
     />
   </main>
-  <section class="relative flex w-full lg:w-3/4 shadow-xl">
+  <section class="relative flex rounded-lg w-full lg:w-3/4 shadow-xl">
       <table class="w-full caption-bottom text-sm flex-grow">
-          <thead class="[&amp;_tr]:border-b bg-red-100">
+          <thead class="bg-blue-500">
               <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                   <th
-                      class="h-12 px-4 text-left text-lg text-gray-700 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                      class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
                   >
                       Short
                   </th>
                   <th
-                      class="h-12 px-4 text-left text-lg text-gray-700 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                      class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
                   >
                       Source short
                   </th>
                   <th
-                      class="h-12 px-4 text-left text-lg text-gray-700 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                      class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
                   >
                       Description
                   </th>
                   <th
-                      class="h-12 px-4 text-left text-lg text-gray-700 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                      class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
                   >
                       Generated
                   </th>
@@ -83,7 +83,8 @@
                 data: @json($data),
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
+                borderWidth: 1,
+                fill:true
             }]
         },
         options: {

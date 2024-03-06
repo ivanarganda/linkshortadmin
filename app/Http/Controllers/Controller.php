@@ -13,6 +13,33 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
+    public function getNewUsersLastMonth(){
+        $currentMonth = date('m');
+        $currentYear = date('Y');
+
+        $usersRegisteredThisMonth = DB::table('users')
+            ->whereMonth('created_at', $currentMonth)
+            ->whereYear('created_at', $currentYear)
+            ->count();
+
+        $usersRegisteredLastMonth = DB::table('users')
+            ->where('created_at', '<', date('Y-m-01'))
+            ->count();
+
+        $percentageChange = ($usersRegisteredThisMonth < $usersRegisteredLastMonth) ? 
+            '-' . number_format(abs(($usersRegisteredThisMonth - $usersRegisteredLastMonth) / $usersRegisteredLastMonth) * 100, 2) :
+            '+' . number_format(abs(($usersRegisteredThisMonth - $usersRegisteredLastMonth) / $usersRegisteredThisMonth) * 100, 2);
+
+        $percentageChange .= '%';
+
+        return [
+            'users_registered_this_month' => $usersRegisteredThisMonth,
+            'users_registered_last_month' => $usersRegisteredLastMonth,
+            'percentage_change' => $percentageChange
+        ];
+
+    }
+
     public function generateChart( $for ){
 
         $labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July' , 'August' , 'September' , 'October' , 'November' , 'December']; // Initialize an empty array for labels

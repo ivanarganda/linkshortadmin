@@ -12,27 +12,27 @@
         type="search"
     />
   </main>
-  <section class="relative flex w-full lg:w-3/4 shadow-xl">
+  <section class="relative flex w-full rounded-lg lg:w-3/4 shadow-xl">
       <table class="w-full caption-bottom text-sm flex-grow">
-          <thead class="[&amp;_tr]:border-b bg-red-100">
+          <thead class="bg-blue-500">
               <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                   <th
-                      class="h-12 px-4 text-left text-lg text-gray-700 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                      class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
                   >
                       Name
                   </th>
                   <th
-                      class="h-12 px-4 text-left text-lg text-gray-700 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                      class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
                   >
                       Email
                   </th>
                   <th
-                      class="h-12 px-4 text-left text-lg text-gray-700 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                      class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
                   >
                       Role
                   </th>
                   <th
-                      class="h-12 px-4 text-left text-lg text-gray-700 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                      class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
                   >
                       Registered
                   </th>
@@ -83,7 +83,8 @@
                 data: @json($data),
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
+                borderWidth: 1,
+                fill:true
             }]
         },
         options: {
