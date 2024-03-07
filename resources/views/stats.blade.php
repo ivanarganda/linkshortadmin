@@ -18,30 +18,30 @@
                     </div>
                 </div>
             </div> --}}
-                <div class="rounded-lg border shadow-lg bg-blue-500 text-gray-100 font-bold">
+                <div class="rounded-lg border shadow-lg bg-blue-700 text-gray-100 font-bold">
                     <div class="p-6">
                         {{-- Get the total users registered since last week --}}
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm">NEW USERS</p>
                                 <p class="text-3xl flex flex-row mt-1 font-semibold">
-                                    <span>{{ $users['users_registered_this_month'] }}</span>
-                                    @if ($users['users_registered_last_month'] > $users['users_registered_this_month'])
+                                    <span>{{ $users->users_registered_this_month }}</span>
+                                    @if ($users->users_registered_last_month > $users->users_registered_this_month)
                                         {!!$svgDownArrow!!}
                                     @else
                                         {!!$svgUpArrow!!}
                                     @endif
                                 </p>
-                                <p class="text-sm mt-1 font-semibold">Last month:{{ $users['users_registered_last_month'] }}
+                                <p class="text-sm mt-1 font-semibold">Last month:{{ $users->users_registered_last_month }}
                                 </p>
                                 <p class="text-sm mt-3 font-semibold">
                                     
-                                    @if ($users['users_registered_last_month'] > $users['users_registered_this_month'])
+                                    @if ($users->users_registered_last_month > $users->users_registered_this_month)
                                         <span class="text-red-500 text-xl font-semibold">
                                     @else
                                         <span class="text-green-500 text-xl font-semibold">
                                     @endif
-                                            {{ $users['percentage_change'] }} 
+                                            {{ $users->percentage_change }} 
                                         </span>
                                     Since last month
                                 </p>
@@ -55,19 +55,57 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm">REDIRECTS OF SHORTS</p>
-                                <p class="text-3xl font-semibold">924</p>
-                                <p class="text-sm font-semibold">+1.10% Since yesterday</p>
+                                <p class="text-3xl flex flex-row mt-1 font-semibold">
+                                    <span>{{ $redirects['yesterday']->Today }}</span>
+                                    @if ($redirects['yesterday']->Yesterday > $redirects['yesterday']->Today)
+                                        {!!$svgDownArrow!!}
+                                    @else
+                                        {!!$svgUpArrow!!}
+                                    @endif
+                                </p>
+                                <p class="text-sm mt-1 font-semibold">Yesterday:{{ $redirects['yesterday']->Yesterday }}
+                                </p>
+                                <p class="text-sm mt-3 font-semibold">
+                                    
+                                    @if ($redirects['yesterday']->Yesterday > $redirects['yesterday']->Today)
+                                        <span class="text-red-500 text-xl font-semibold">
+                                    @else
+                                        <span class="text-green-500 text-xl font-semibold">
+                                    @endif
+                                            {{ $redirects['yesterday']->percentage_change }} 
+                                        </span>
+                                    Since yesterday
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="rounded-lg border shadow-lg text-gray-100 font-bold" style="background:#d946ef">
+                <div class="rounded-lg border shadow-lg text-gray-100 font-bold" style="background:#80378b">
                     <div class="p-6">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm">SHORTS GENERATED</p>
-                                <p class="text-3xl font-semibold">49,65%</p>
-                                <p class="text-sm font-semibold">+12% Since last month</p>
+                                <p class="text-3xl flex flex-row mt-1 font-semibold">
+                                    <span>{{ $redirects['last_month']->ThisMonth }}</span>
+                                    @if ($redirects['last_month']->LastMonth > $redirects['last_month']->ThisMonth)
+                                        {!!$svgDownArrow!!}
+                                    @else
+                                        {!!$svgUpArrow!!}
+                                    @endif
+                                </p>
+                                <p class="text-sm mt-1 font-semibold">Last month:{{ $redirects['last_month']->LastMonth }}
+                                </p>
+                                <p class="text-sm mt-3 font-semibold">
+                                    
+                                    @if ($redirects['last_month']->LastMonth > $redirects['last_month']->ThisMonth)
+                                        <span class="text-red-500 text-xl font-semibold">
+                                    @else
+                                        <span class="text-green-500 text-xl font-semibold">
+                                    @endif
+                                            {{ $redirects['last_month']->percentage_change }} 
+                                        </span>
+                                    Since last month
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -110,11 +148,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-1 gap-4">
                 <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                     <div class="flex flex-col space-y-1.5 p-6">
-                        <h3 class="text-2xl font-semibold whitespace-nowrap leading-none tracking-tight">Page visits</h3>
-                        <button
-                            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 ml-auto">
-                            See all
-                        </button>
+                        <h3 class="text-2xl font-semibold whitespace-nowrap leading-none tracking-tight">Page visited by shorts</h3>
                     </div>
                     <div class="p-6">
                         <div class="relative w-full overflow-auto">
@@ -127,15 +161,15 @@
                                         </th>
                                         <th
                                             class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                            Visitors
+                                            Viewers
                                         </th>
                                         <th
                                             class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                            Unique Users
+                                            Only users
                                         </th>
                                         <th
                                             class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                            Bounce Rate
+                                            Rate visit
                                         </th>
                                     </tr>
                                 </thead>

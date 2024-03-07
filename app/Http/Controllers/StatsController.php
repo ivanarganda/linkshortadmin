@@ -32,7 +32,12 @@ class StatsController extends Controller
         return view('stats' , [ 
                 'svgDownArrow' => $svgDownArrow,
                 'svgUpArrow' => $svgUpArrow,
-                'users' => $this->getNewUsersLastMonth() ] );
+                'users' => $this->getNewUsersLastMonth(),
+                'redirects' => [ 
+                                'yesterday' => $this->getRedirectsLastDay() , 
+                                'last_month' => $this->getRedirectsLastMonth() 
+                                ] 
+                ] );
 
     }
 
