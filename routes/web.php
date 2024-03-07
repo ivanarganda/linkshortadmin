@@ -30,5 +30,5 @@ Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::resource('/stats', StatsController::class);
+Route::get('/stats/{search?}', [ StatsController::class , 'index' ]);
 
