@@ -15,9 +15,9 @@
 </head>
 
 <body>
-    <div class="flex flex-col mx-auto">
+    <div class="flex flex-col mx-auto min-w-[350px]">
         @include('layouts/header')
-        <div class="flex flex-1">
+        <div class="flex justify-center min-w-[350px]">
             @include('layouts/sidebar')
             @auth
                 @include('layouts/main-content')

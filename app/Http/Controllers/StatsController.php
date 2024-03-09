@@ -29,9 +29,6 @@ class StatsController extends Controller
         <line x1="8" y1="9" x2="12" y2="5" />
         </svg>';
 
-        // dd($this->getRedirectsTotalAndByUser());
-        // die();
-
         return view('stats' , [ 
                 'svgDownArrow' => $svgDownArrow,
                 'svgUpArrow' => $svgUpArrow,

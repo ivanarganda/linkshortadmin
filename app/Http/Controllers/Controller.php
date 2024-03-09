@@ -134,7 +134,7 @@ class Controller extends BaseController
     public function getRedirectsTotalAndByUser(){
         $totalRedirects = DB::table('urls')
         ->leftJoin('redirects', 'urls.id', '=', 'redirects.idUrl')
-        ->select('urls.id AS idUrl', 'urls.url', 'urls.short', DB::raw('count(*) AS total_redirects_shorts'))
+        ->select('urls.id AS idUrl', 'urls.url' , 'urls.short' , DB::raw('count(*) AS total_redirects_shorts'))
         ->groupBy('urls.id', 'urls.url', 'urls.short')
         ->paginate(5);
 
@@ -148,47 +148,45 @@ class Controller extends BaseController
         return $totalRedirects;
     }
 
-    public function generateChart( $for , $months = [] ){
+    public function generateChart($for, $months = [])
+{
+    $labels = count($months) !== 0 ? $months : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    $data = array_fill(0, count($labels), 0);
 
-        $labels = count($months) !== 0 ? $months : ['January', 'February', 'March', 'April', 'May', 'June', 'July' , 'August' , 'September' , 'October' , 'November' , 'December']; // Initialize an empty array for labels
-        $data = array_fill(0, count($labels) , 0); // Initialize an empty array for data
+    $data_charts = [
+        "users" => User::select(
+            DB::raw('DATE_FORMAT(created_at, "%Y-%m") as formatted_date'),
+            DB::raw('COUNT(*) as total'),
+            DB::raw('MAX(DATE_FORMAT(created_at, "%Y-%m-%d")) as date'),
+            DB::raw('MAX(name) as name'),
+            DB::raw('MAX(email) as email'),
+            DB::raw('MAX(type) as type')
+        )
+            ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
+            ->paginate(5),
+        "urls" => Url::select(
+            DB::raw('DATE_FORMAT(created_at, "%Y-%m") as formatted_date'),
+            DB::raw('COUNT(*) as total'),
+            DB::raw('MAX(DATE_FORMAT(created_at, "%Y-%m-%d")) as date'),
+            DB::raw('MAX(url) as url'),
+            DB::raw('MAX(short) as short'),
+            DB::raw('MAX(description) as description')
+        )
+            ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
+            ->paginate(5),
+        "redirects" => $this->getRedirectsLastMonth()
+    ];
 
-        $data_charts = [
-                "users" => User::select(
-                    DB::raw('DATE_FORMAT(created_at, "%Y-%m") as formatted_date'),
-                    DB::raw('COUNT(*) as total'),
-                    DB::raw('MAX(DATE_FORMAT(created_at, "%Y-%m-%d")) as date'),
-                    DB::raw('MAX(name) as name'),
-                    DB::raw('MAX(email) as email'),
-                    DB::raw('MAX(type) as type')
-                )
-                ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
-                ->paginate(5),
-                "urls" => Url::select(
-                    DB::raw('DATE_FORMAT(created_at, "%Y-%m") as formatted_date'),
-                    DB::raw('COUNT(*) as total'),
-                    DB::raw('MAX(DATE_FORMAT(created_at, "%Y-%m-%d")) as date'),
-                    DB::raw('MAX(url) as url'),
-                    DB::raw('MAX(short) as short'),
-                    DB::raw('MAX(description) as description')
-                )
-                ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
-                ->paginate(5),
-                "redirects" => $this->getRedirectsLastMonth()
-            ];
-
-        // Iterate over each grouped user data
-        foreach ($data_charts[$for] as $item) {
-            // Parse the registration date as Carbon instance for formatting
-            $date = Carbon::parse($item->date);
-            $month = explode( '-' , $date )[1];
-            $month_ = $month < 10 ? $month[1] : $month;
-            // Add the formatted registration date to labels array (e.g., 'January 01, 2022')
-            // Add the total users for each registration date to data array
-            $data[ $month_ - 1 ] = $item->total;
-        }
-
-        return [ $labels , $data ];
+    // Iterate over each grouped user data
+    foreach ($data_charts[$for] as $item) {
+        $date = Carbon::parse($item->date);
+        $month = explode('-', $date)[1];
+        $month_ = $month < 10 ? $month[1] : $month;
+        $data[$month_ - 1] = $item->total;
     }
+
+    return [$labels, $data];
+}
+
 
 }
