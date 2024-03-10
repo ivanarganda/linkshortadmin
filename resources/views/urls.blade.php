@@ -4,8 +4,8 @@
 
 @section('main-content')
 <div class="flex flex-col justify-center items-center w-full mt-2 xl:mx-auto">
-  <main class="flex w-full lg:w-3/4 justify-between items-center mt-16 mb-6">
-    <h1 class="text-2xl font-semibold text-gray-600">List of shorts registered</h1>
+  <main class="flex w-full lg:w-3/4 justify-between items-center -mt-10 mb-6">
+    <h1 class="text-2xl font-semibold text-gray-600">List of shorts generated</h1>
     <input
         class="flex h-10 outline-none rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-48 md:w-64"
         placeholder="Filter shorts..."
@@ -72,36 +72,13 @@
       </ul>
   </nav>
 </div>
-<script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line', // Change this to 'bar', 'pie', etc. based on your need
-        data: {
-            labels: @json($labels),
-            datasets: [{
-                label: 'Registered Users',
-                data: @json($data),
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
-                fill:true
-            }]
-        },
-        options: {
-            responsive:true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 1, // Ensure y-axis values are integers
-                        callback: function(value, index, values) {
-                            return Math.floor(value); // Display integer values only
-                        }
-                    }
-                }
-            }
-        }
-    });
+<script type="module" defer>
+    generateChart(
+        'Linkshorts generated'
+        , 
+        @json($labels)
+        , 
+        @json($data)
+    );
 </script>
 @endsection

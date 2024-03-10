@@ -148,6 +148,37 @@ class Controller extends BaseController
         return $totalRedirects;
     }
 
+    public function generateChartRedirectsTotalAndUsers(){
+
+        // Your existing query to get the total redirects
+        $totalRedirects = DB::table('urls')
+        ->leftJoin('redirects', 'urls.id', '=', 'redirects.idUrl') // Make sure to use the correct column name for the foreign key in the redirects table
+        ->select('urls.id AS idUrl', 'urls.url', 'urls.short', DB::raw('count(redirects.id) AS total_redirects_shorts'))
+        ->groupBy('urls.id', 'urls.url', 'urls.short')
+        ->paginate(5); // You may want to use ->get() instead of paginate if this is specifically for a chart
+
+        // Loop through each redirect and get the unique user count
+        foreach ($totalRedirects as $redirect) {
+            $redirect->total_redirects_users = DB::table('users')
+                ->join('redirects', 'users.id', '=', 'redirects.idUser') // Ensure you're using the correct column names
+                ->where('redirects.idUrl', $redirect->idUrl) // Make sure the column name matches the foreign key in the redirects table
+                ->distinct('users.id') // We want to count each user only once
+                ->count();
+        }
+
+        // Prepare the data for Chart.js
+        $labels = $totalRedirects->pluck('short');
+        $viewersData = $totalRedirects->pluck('total_redirects_shorts');
+        $usersData = $totalRedirects->pluck('total_redirects_users');
+
+        return [
+            $labels,
+            $viewersData,
+            $usersData
+        ];
+
+    }
+
     public function generateChart($for, $months = [])
 {
     $labels = count($months) !== 0 ? $months : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

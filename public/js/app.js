@@ -25,6 +25,42 @@ document.getElementById('toggleSidebar').addEventListener('click', function () {
 
 });
 
+// Chart for both users and linkshorts
+const generateChart = ( title , labels, data) => {
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: title,
+                data: data,
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderWidth: 1,
+                fill:true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    ticks: {
+                        stepSize: 1,
+                        callback: function (value, index, values) {
+                            return Math.floor(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+}
+
 const generateChartRedirectsMonth = (labels, data) => {
     var ctx = document.getElementById('myChart').getContext('2d');
 
@@ -102,39 +138,32 @@ const generateChartRedirectsMonth = (labels, data) => {
     });
 }
 
-const generateChartViewersAndUsers = (labels, data) => {
+const generateChartViewersAndUsers = (shorts, viewers , users ) => {
 
     var ctx = document.getElementById('myChart1').getContext('2d');
-
-    let datasets = [];
-
-    data.forEach(dataset => {
-        datasets.push({
-            label: dataset.label,
-            data: dataset.data,
-            backgroundColor: dataset.backgroundColor,
-            borderWidth: 1
-        });
-    });
-
     new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-            labels: labels,
-            datasets: datasets
+            labels: shorts,
+            datasets: [{
+                label: 'Total Viewers',
+                data: viewers,
+                backgroundColor: 'rgba(54, 162, 235, 1)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Unique Users',
+                data: users,
+                backgroundColor: 'rgba(255, 99, 132, 1)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
             scales: {
                 y: {
-                    beginAtZero: false,
-                    ticks: {
-                        stepSize: 1,
-                        callback: function (value, index, values) {
-                            return Math.floor(value);
-                        }
-                    }
+                    beginAtZero: true
                 }
             }
         }

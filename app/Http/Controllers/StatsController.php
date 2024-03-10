@@ -29,16 +29,23 @@ class StatsController extends Controller
         <line x1="8" y1="9" x2="12" y2="5" />
         </svg>';
 
+        [ $labels , $viewersData , $usersData ] = $this->generateChartRedirectsTotalAndUsers();
+
         return view('stats' , [ 
-                'svgDownArrow' => $svgDownArrow,
-                'svgUpArrow' => $svgUpArrow,
-                'date' => $this->getDate('D','M','Y'),
-                'users' => $this->getNewUsersLastMonth(),
-                'redirects' => [ 
-                    'yesterday' => $this->getRedirectsLastDay(), 
-                    'last_month' => $this->getRedirectsLastMonth(),
-                    'getRedirectsTotalAndByUser' => $this->getRedirectsTotalAndByUser()
-                ] 
+            'svgDownArrow' => $svgDownArrow,
+            'svgUpArrow' => $svgUpArrow,
+            'date' => $this->getDate('D','M','Y'),
+            'users' => $this->getNewUsersLastMonth(),
+            'redirects' => [ 
+                'yesterday' => $this->getRedirectsLastDay(), 
+                'last_month' => $this->getRedirectsLastMonth(),
+                'getRedirectsTotalAndByUser' => $this->getRedirectsTotalAndByUser(),
+                'chart' => [
+                    'shorts' => $labels,
+                    'viewersData' => $viewersData,
+                    'usersData' => $usersData
+                ]
+            ]
         ]);
 
     }

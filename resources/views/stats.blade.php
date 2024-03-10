@@ -98,8 +98,8 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col lg:flex-row justify-center lg:justify-around gap-4 w-full mb-6">
-            <div class="rounded-lg border bg-card text-card-foreground shadow-sm w-full">
+        <div class="flex flex-1 flex-col lg:flex-row justify-center lg:justify-around gap-4 w-full mb-6">
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm w-full h-full">
                 <div class="flex flex-col p-6">
                     <h3 class="text-2xl font-semibold whitespace-nowrap leading-none tracking-tight">Overview redirects
                         on {{ $date['previous']['month'] }} {{ $date['current']['month'] }} in
@@ -107,25 +107,24 @@
                     <p class="text-sm text-muted-foreground">Sales value</p>
                 </div>
                 <div class="p-6">
-                    <div class="w-full h-[300px]">
+                    <div class="w-full">
                         <div style="position: relative;">
-                            <canvas id="myChart" height="300"></canvas>
+                            <canvas id="myChart" height="400"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="rounded-lg border bg-card text-card-foreground shadow-sm w-full">
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm w-full h-full">
                 <div class="flex flex-col p-6">
-                    <h3 class="text-2xl font-semibold whitespace-nowrap leading-none tracking-tight">Overview redirects
-                        on {{ $date['previous']['month'] }} {{ $date['current']['month'] }} in
-                        {{ $date['current']['year'] }}</h3>
+                    <h3 class="text-2xl font-semibold whitespace-nowrap leading-none tracking-tight">Overview total redirects
+                        in {{ $date['current']['year'] }}</h3>
                     <p class="text-sm text-muted-foreground">Sales value</p>
                 </div>
                 <div class="p-6">
                     <div class="w-full h-[300px]">
                         
                         <div style="position: relative;">
-                            <canvas id="myChart1" height="300"></canvas>
+                            <canvas id="myChart1" height="215"></canvas>
                         </div>
                       
                     </div>
@@ -262,19 +261,9 @@
                 ]
             );
             generateChartViewersAndUsers(
-                [ '{{$date["previous"]["month"]}}' , '{{$date["current"]["month"]}}'],
-                [
-                    {
-                        label: [ '{{$date["previous"]["month"]}}', '{{$date["current"]["month"]}}' ],
-                        data: [ "{{$redirects['last_month']->LastMonth}}", "{{$redirects['last_month']->ThisMonth}}" ],
-                        color: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)']
-                    },
-                    {
-                        label: [ '{{$date["previous"]["month"]}}', '{{$date["current"]["month"]}}' ],
-                        data: [ "{{$redirects['last_month']->LastMonth}}", "{{$redirects['last_month']->ThisMonth}}" ],
-                        color: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)']
-                    }
-                ]
+                @json($redirects['chart']['shorts']),
+                @json($redirects['chart']['viewersData']),
+                @json($redirects['chart']['usersData']),
             );
         </script>
 @endsection
