@@ -1,3 +1,29 @@
+const COLORS = {
+    red: 'rgba(244, 67, 54, 0.5)',
+    pink: 'rgba(233, 30, 99, 0.5)',
+    purple: 'rgba(156, 39, 176, 0.5)',
+    deepPurple: 'rgba(103, 58, 183, 0.5)',
+    indigo: 'rgba(63, 81, 181, 0.5)',
+    blue: 'rgba(33, 150, 243, 0.5)',
+    lightBlue: 'rgba(3, 169, 244, 0.5)',
+    cyan: 'rgba(0, 188, 212, 0.5)',
+    teal: 'rgba(0, 150, 136, 0.5)',
+    green: 'rgba(76, 175, 80, 0.5)',
+    lightGreen: 'rgba(139, 195, 74, 0.5)',
+    lime: 'rgba(205, 220, 57, 0.5)',
+    yellow: 'rgba(255, 235, 59, 0.5)',
+    amber: 'rgba(255, 193, 7, 0.5)',
+    orange: 'rgba(255, 152, 0, 0.5)',
+    deepOrange: 'rgba(255, 87, 34, 0.5)',
+    brown: 'rgba(121, 85, 72, 0.5)',
+    grey: 'rgba(158, 158, 158, 0.5)'
+};
+
+const THEMES = {
+    dark: `<svg class="h-8 w-8" style="color:orange" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="12" r="5" />  <line x1="12" y1="1" x2="12" y2="3" />  <line x1="12" y1="21" x2="12" y2="23" />  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />  <line x1="1" y1="12" x2="3" y2="12" />  <line x1="21" y1="12" x2="23" y2="12" />  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" /></svg>`,
+    light: `<svg class="h-8 w-8" style="color:orange"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>`
+}
+
 if (document.getElementById('toggleButton')) {
     document.getElementById('toggleButton').addEventListener('click', function () {
         // Toggle visibility of child elements
@@ -9,6 +35,20 @@ if (document.getElementById('toggleButton')) {
         }
     });
 }
+
+if (localStorage.getItem('darktheme') != 'false' ){
+    $('body').addClass('bg-gray-800 text-gray-100');
+    $('#theme').html(THEMES.dark);
+} else {
+    $('body').removeClass('bg-gray-800 text-gray-100');
+    $('#theme').html(THEMES.light);
+}
+
+$('#theme').on('click', ()=>{
+    localStorage.getItem('darktheme') != 'false' ? $('body').removeClass('bg-gray-800 text-gray-100') : $('body').addClass('bg-gray-800 text-gray-100');
+    $('#theme').html( localStorage.getItem('darktheme') !== 'false' ? THEMES.light : THEMES.dark );
+    localStorage.setItem( 'darktheme' , localStorage.getItem('darktheme') !== 'false' ? 'false' : ' true' );   
+})
 
 let toogled = false;
 document.getElementById('toggleSidebar').addEventListener('click', function () {
@@ -37,9 +77,10 @@ const generateChart = ( title , labels, data) => {
             datasets: [{
                 label: title,
                 data: data,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderWidth: 1,
-                fill:true
+                backgroundColor: COLORS.red,
+                borderColor: COLORS.red,
+                borderWidth: 2,
+                fill:false
             }]
         },
         options: {
@@ -148,15 +189,15 @@ const generateChartViewersAndUsers = (shorts, viewers , users ) => {
             datasets: [{
                 label: 'Total Viewers',
                 data: viewers,
-                backgroundColor: 'rgba(54, 162, 235, 1)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: COLORS.cyan,
+                borderColor: COLORS.cyan,
                 borderWidth: 1
             },
             {
                 label: 'Unique Users',
                 data: users,
-                backgroundColor: 'rgba(255, 99, 132, 1)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: COLORS.teal,
+                borderColor: COLORS.teal,
                 borderWidth: 1
             }]
         },

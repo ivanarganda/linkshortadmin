@@ -30,6 +30,7 @@
             <input class="flex h-10 border border-input px-3 text-sm ring-offset-background outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full pl-10 pr-4 py-2 rounded-md text-gray-900 placeholder-gray-500 bg-white" placeholder="Search..." type="search">
         </div>
     </div>
+    <div id="theme"></div>
     @auth
         <div class="relative flex justify-center w-1/4 sm:w-1/2 md:w-1/4">
             <span id="toggleButton" class="cursor-pointer flex h-full items-center justify-center rounded-full bg-muted font-bold">

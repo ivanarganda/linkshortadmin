@@ -16,7 +16,14 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
+    public function __construct(){
+        $this->params = [
+            'short' => isset( $_GET['short'] ) ? $_GET['short'] : null
+        ];
+    }
+
     public function getDate( $day , $month , $year ) {
+
         $date = Carbon::now();
     
         // Extract current month, day, and year
@@ -131,7 +138,9 @@ class Controller extends BaseController
         return $result;
     }
 
+    // Table of page visited by shorts
     public function getRedirectsTotalAndByUser(){
+        
         $totalRedirects = DB::table('urls')
         ->leftJoin('redirects', 'urls.id', '=', 'redirects.idUrl')
         ->select('urls.id AS idUrl', 'urls.url' , 'urls.short' , DB::raw('count(*) AS total_redirects_shorts'))

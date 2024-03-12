@@ -5,6 +5,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UrlsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,5 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/stats/{search?}', [ StatsController::class , 'index' ]);
-
+Route::get('/settings/{id?}', [ SettingsController::class , 'index' ]);
+Route::get('/settings/delete/{id}', [ SettingsController::class , 'delete' ]);
