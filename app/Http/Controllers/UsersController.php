@@ -48,8 +48,10 @@ class UsersController extends Controller
 
         [ $labels, $data ] = $this->generateChart('users');
 
+        $styles = $this->styles;
+
         // Pass the users data along with labels and data to the view
-        return view('users', compact('labels', 'data' , 'users'));
+        return view('users', compact('labels', 'data' , 'users' , 'styles'));
     }
     
 

@@ -3,8 +3,8 @@
 @section('title', 'Shorts')
 
 @section('main-content')
-<div class="flex flex-col justify-center items-center w-full mt-2 xl:mx-auto">
-  <main class="flex w-full lg:w-3/4 justify-between items-center -mt-10 mb-6">
+<div class="flex flex-col justify-center items-center w-full mt-20 lg:mt-10 xl:mx-auto">
+  <main {!!$styles['sections']['background']!!} class="flex w-full lg:w-3/4 justify-between items-center -mt-10 mb-6 rounded-md shadow-md p-6">
     <h1 class="text-2xl font-semibold text-gray-600">List of shorts generated</h1>
     <input
         class="flex h-10 outline-none rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-48 md:w-64"
@@ -12,7 +12,7 @@
         type="search"
     />
   </main>
-  <section class="relative flex rounded-lg w-full lg:w-3/4 shadow-xl">
+  <section {!!$styles['sections']['background']!!} class="relative flex rounded-lg w-full lg:w-3/4 shadow-xl rounded-md shadow-md p-6">
       <table class="w-full caption-bottom text-sm flex-grow">
           <thead class="bg-blue-500">
               <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
@@ -50,7 +50,7 @@
           </tbody>
       </table>
   </section>
-  <section class="flex mt-10 mb-5 w-full lg:w-3/4 h-96">
+  <section {!!$styles['sections']['background']!!} class="flex mt-10 mb-5 w-full lg:w-3/4 h-96 rounded-md shadow-md p-6">
       <canvas class="h-full" id="myChart"></canvas>
   </section>
   <nav role="navigation" aria-label="pagination" class="mx-auto flex w-full justify-center mt-auto">

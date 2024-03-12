@@ -20,6 +20,11 @@ class Controller extends BaseController
         $this->params = [
             'short' => isset( $_GET['short'] ) ? $_GET['short'] : null
         ];
+        $this->styles = [
+            'sections' => [
+                'background' => 'style="background: rgba(255, 255, 255, 0.9)"'
+            ]
+        ];
     }
 
     public function getDate( $day , $month , $year ) {

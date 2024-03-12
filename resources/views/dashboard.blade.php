@@ -20,6 +20,7 @@
         <div class="flex justify-center min-w-[350px]">
             @include('layouts/sidebar')
             @auth
+                @include('layouts/rightSidebar')
                 @include('layouts/main-content')
             @else
                 @include('form/login')

@@ -34,6 +34,8 @@ class StatsController extends Controller
 
         [ $labels , $viewersData , $usersData ] = $this->generateChartRedirectsTotalAndUsers( $short );
 
+        $styles = $this->styles;
+
         return view('stats' , [ 
             'params' => [
                 'short' => $short
@@ -52,7 +54,8 @@ class StatsController extends Controller
                     'viewersData' => $viewersData,
                     'usersData' => $usersData
                 ]
-            ]
+            ],
+            'styles' => $styles
         ]);
 
     }

@@ -1,8 +1,8 @@
 
 @auth
-    <aside id="sidebar" class="w-46 bg-gray-600 text-white p-6 overflow-auto shadow-md fixed inset-y-0 -left-full lg:-left-0 z-10 transform md:translate-x-0 transition-all">
+    <aside id="sidebar" style="background: rgba(1, 1, 20, 0.5)" class="w-46 bg-gray-600 text-white p-6 overflow-auto shadow-md fixed inset-y-0 -left-full lg:-left-0 z-10 transform md:translate-x-0 transition-all">
 @else 
-    <aside id="sidebar" class="w-46 bg-gray-600 text-white p-6 overflow-auto shadow-md fixed inset-y-0 -left-full md:-left-0 z-10 transform md:translate-x-0 transition-all">
+    <aside id="sidebar" style="background: rgba(1, 1, 20, 0.5)" class="w-46 bg-gray-600 text-white p-6 overflow-auto shadow-md fixed inset-y-0 -left-full md:-left-0 z-10 transform md:translate-x-0 transition-all">
 @endauth
 
     <nav class="space-y-10 mt-20">
@@ -50,5 +50,3 @@
         @endauth
     </nav>
 </aside>
-
-<div id="overlay" class="hidden fixed inset-0 bg-black opacity-50"></div>

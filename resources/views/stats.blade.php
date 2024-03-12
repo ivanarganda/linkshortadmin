@@ -5,7 +5,7 @@
 @section('main-content')
     <div class="flex flex-col justify-center items-center ml-auto lg:ml-40 mt-20 w-full">
         @if ( $params['short'] !== null )
-        <main class="flex w-full lg:w-full justify-between items-center mb-6 border border-gray-300 rounded-md shadow-md p-6">
+        <main {!!$styles['sections']['background']!!} class="flex w-full lg:w-full justify-between items-center mb-6 border border-gray-300 rounded-md shadow-md p-6">
             <h1 class="text-2xl font-semibold text-gray-600">Redirects of {{$params['short']}}</h1>
             <a
                 class="flex relative h-10 outline-none rounded-md bg-background px-3 py-2 text-sm"
@@ -21,8 +21,8 @@
             </a>
         </main>
         @endif
-        <div class="flex flex-col lg:flex-row justify-center lg:justify-between mb-6 w-full">
-            <div class="rounded-lg border shadow-lg bg-blue-700 w-full text-gray-100 font-bold">
+        <section class="flex flex-col lg:flex-row justify-center gap-1 lg:justify-between mb-6 w-full">
+            <article class="rounded-lg shadow-lg bg-blue-700 w-full text-gray-100 font-bold">
                 <div class="p-6 w-full">
                     {{-- Get the total users registered since last week --}}
                     <div class="flex items-center justify-between">
@@ -52,8 +52,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="rounded-lg border shadow-lg text-gray-100 w-full font-bold" style="background:#f97316">
+            </article>
+            <article class="rounded-lg shadow-lg text-gray-100 w-full font-bold" style="background:#f97316">
                 <div class="p-6">
                     {{-- Get the total users registered since last week --}}
                     <div class="flex items-center justify-between">
@@ -83,8 +83,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="rounded-lg border shadow-lg text-gray-100 w-full font-bold" style="background:#80378b">
+            </article>
+            <article class="rounded-lg shadow-lg text-gray-100 w-full font-bold" style="background:#80378b">
                 <div class="p-6">
                     <div class="flex items-center justify-between">
                         <div>
@@ -113,10 +113,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="flex flex-1 flex-col lg:flex-row justify-center lg:justify-around gap-4 w-full mb-6">
-            <div class="rounded-lg border bg-card text-card-foreground shadow-md w-full h-full">
+            </article>
+        </section>
+        <section class="flex flex-1 flex-col lg:flex-row justify-center lg:justify-around gap-4 w-full mb-6">
+            <article {!!$styles['sections']['background']!!} class="rounded-lg border bg-card text-card-foreground shadow-md w-full h-full">
                 <div class="flex flex-col p-6">
                     <h3 class="text-2xl font-semibold whitespace-nowrap leading-none tracking-tight">Overview redirects
                         on {{ $date['previous']['month'] }} {{ $date['current']['month'] }} in
@@ -130,8 +130,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="rounded-lg border bg-card text-card-foreground shadow-md w-full h-full">
+            </article>
+            <article {!!$styles['sections']['background']!!} class="rounded-lg border bg-card text-card-foreground shadow-md w-full h-full">
                 <div class="flex flex-col p-6">
                     <h3 class="text-2xl font-semibold whitespace-nowrap leading-none tracking-tight">Overview total redirects
                         in {{ $date['current']['year'] }}</h3>
@@ -146,10 +146,10 @@
                       
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="flex col justify-center w-full">
-            <div class="rounded-lg border bg-card text-card-foreground shadow-md w-full">
+            </article>
+        </section>
+        <section class="flex col justify-center w-full">
+            <div {!!$styles['sections']['background']!!} class="rounded-lg border bg-card text-card-foreground shadow-md w-full">
                 <div class="flex flex-col space-y-1.5 p-6">
                     <h3 class="text-2xl text-gray-600 dark:text-gray-200 font-semibold whitespace-nowrap leading-none tracking-tight">Page
                         visited by shorts</h3>
@@ -263,7 +263,7 @@
                     </nav>
                 </div>
             </div>
-        </div>
+        </section>
         <script type="module" defer>
 
             // Generate a pie chart about redirects by last months. 

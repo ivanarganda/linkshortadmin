@@ -5,7 +5,7 @@
         </script>
     @endif
 @endauth
-<header class="flex items-center shadow-xl justify-between px-6 py-4 bg-gray-900 z-20 text-white fixed w-full top-0">
+<header class="flex items-center shadow-xl justify-between px-6 py-4 z-20 text-white fixed w-full top-0" style="background: rgba(1, 1, 20, 0.5)">
     <button id="toggleSidebar" class="block md:hidden w-40 text-white">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M3 4a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm0 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm0 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1z" clip-rule="evenodd" />
@@ -33,17 +33,9 @@
     <div id="theme"></div>
     @auth
         <div class="relative flex justify-center w-1/4 sm:w-1/2 md:w-1/4">
-            <span id="toggleButton" class="cursor-pointer flex h-full items-center justify-center rounded-full bg-muted font-bold">
+            <span id="toggleButtonUser" class="cursor-pointer hover:text-gray-100 hover:underline transition-all flex h-full items-center justify-center rounded-full bg-muted font-bold">
                 {{ Auth::user()->name }}
             </span>
-            <ul id="childElements" class="hidden absolute left-20 top-6 sm:left-auto w-1/2 text-black bg-white shadow-lg rounded-full transition-all z-20">
-                <li class="style-none px-2 text-gray-700 hover:bg-gray-200 bg-white flex flex-row justify-center items-center z-20">
-                    <a href="#">Settings</a>
-                </li>
-                <li class="style-none px-2 text-gray-700 hover:bg-gray-200 bg-white flex flex-row justify-center items-center z-20">
-                    <a class="w-full m-auto flex flex-row justify-center" href="{{ url('logout') }}">Sign out</a>
-                </li>
-            </ul>
         </div>
     @endauth
 </header>

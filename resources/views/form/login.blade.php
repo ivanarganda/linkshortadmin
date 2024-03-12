@@ -1,4 +1,4 @@
-<div class="w-full md:w-2/4 lg:w-2/3 xl:w-2/4 place-content-center mx-auto min-w-fit mt-40 animate-pulse transition-all duration-500 ease-in-out">
+<div class="w-full md:w-2/4 lg:w-2/3 xl:w-2/4 place-content-center mx-auto min-w-fit mt-40 transition-all duration-500 ease-in-out">
   <div class="w-full bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-all duration-500 ease-in-out">
       <form action="{{ url('/login') }}" method="post" class="grid gap-8 w-full transition-all duration-500 ease-in-out">
           @csrf

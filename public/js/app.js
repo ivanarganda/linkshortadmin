@@ -24,15 +24,20 @@ const THEMES = {
     light: `<svg class="h-8 w-8" style="color:orange"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>`
 }
 
-if (document.getElementById('toggleButton')) {
-    document.getElementById('toggleButton').addEventListener('click', function () {
-        // Toggle visibility of child elements
-        var childElements = document.getElementById('childElements');
-        if (childElements.classList.contains('hidden')) {
-            childElements.classList.remove('hidden');
+if (document.getElementById('toggleButtonUser')) {
+    let toogled = false;
+    document.getElementById('toggleButtonUser').addEventListener('click', function () {
+
+        if (!toogled) {
+            $("#right-sidebar").addClass('right-0').removeClass('-right-full');
+            $("#overlay").removeClass('hidden');
+            toogled = true;
         } else {
-            childElements.classList.add('hidden');
+            $("#right-sidebar").removeClass('right-0').addClass('-right-full');
+            $("#overlay").addClass('hidden');
+            toogled = false;
         }
+
     });
 }
 
@@ -109,10 +114,9 @@ const generateChartRedirectsMonth = (labels, data) => {
 
     data.forEach(dataset => {
         datasets.push({
-            label: dataset.label,
+            // label: dataset.label,
             data: dataset.data,
-            backgroundColor: dataset.backgroundColor,
-            borderWidth: 1
+            backgroundColor: dataset.backgroundColor 
         });
     });
 
@@ -125,17 +129,6 @@ const generateChartRedirectsMonth = (labels, data) => {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    ticks: {
-                        stepSize: 1,
-                        callback: function (value, index, values) {
-                            return Math.floor(value);
-                        }
-                    }
-                }
-            },
             plugins: {
                 afterDraw: function(chart) {
                     var ctx = chart.chart.ctx;

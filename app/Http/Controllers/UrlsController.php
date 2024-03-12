@@ -27,8 +27,10 @@ class UrlsController extends Controller
 
         [ $labels , $data ] = $this->generateChart('urls');
 
+        $styles = $this->styles;
+
         // Return the view with the URLs
-        return view('urls', compact( 'labels' , 'data' , 'urls'));
+        return view('urls', compact( 'labels' , 'data' , 'urls' , 'styles'));
     }
 
     /**
