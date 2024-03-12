@@ -43,9 +43,10 @@ class StatsController extends Controller
             'date' => $this->getDate('D','M','Y'),
             'users' => $this->getNewUsersLastMonth(),
             'redirects' => [ 
-                'yesterday' => $this->getRedirectsLastDay( $short ), 
-                'last_month' => $this->getRedirectsLastMonth( $short ),
-                'getRedirectsTotalAndByUser' => $this->getRedirectsTotalAndByUser( $short ),
+                'yesterday' => $this->getRedirectsLastDay(), 
+                'last_month' => $this->getRedirectsLastMonth(),
+                'getRedirectsTotalAndByUser' => $this->getRedirectsTotalAndByUser(),
+                'getRedirectsTotalByUser' => $this->getRedirectsTotalByUser(),
                 'chart' => [
                     'shorts' => $labels,
                     'viewersData' => $viewersData,

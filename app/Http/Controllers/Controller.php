@@ -138,6 +138,20 @@ class Controller extends BaseController
         return $result;
     }
 
+    public function getRedirectsTotalByUser(){
+
+        $result = $result = Url::select('urls.url', 'urls.short', 'users.email', \DB::raw('COUNT(*) AS total_redirect_user'))
+        ->leftJoin('redirects', 'urls.id', '=', 'redirects.idUrl')
+        ->leftJoin('users', 'users.id', '=', 'redirects.idUser')
+        ->whereNotNull('users.email')
+        ->where('urls.short', '=', $this->params['short'])
+        ->groupBy('urls.url', 'users.id','urls.short', 'users.email')
+        ->get();
+
+        return $result;
+
+    }
+
     // Table of page visited by shorts
     public function getRedirectsTotalAndByUser(){
         

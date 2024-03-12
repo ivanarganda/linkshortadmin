@@ -36,19 +36,19 @@ if (document.getElementById('toggleButton')) {
     });
 }
 
-if (localStorage.getItem('darktheme') != 'false' ){
-    $('body').addClass('bg-gray-800 text-gray-100');
-    $('#theme').html(THEMES.dark);
-} else {
-    $('body').removeClass('bg-gray-800 text-gray-100');
-    $('#theme').html(THEMES.light);
-}
+// if (localStorage.getItem('darktheme') != 'false' ){
+//     $('body').addClass('bg-gray-800 text-gray-100');
+//     $('#theme').html(THEMES.dark);
+// } else {
+//     $('body').removeClass('bg-gray-800 text-gray-100');
+//     $('#theme').html(THEMES.light);
+// }
 
-$('#theme').on('click', ()=>{
-    localStorage.getItem('darktheme') != 'false' ? $('body').removeClass('bg-gray-800 text-gray-100') : $('body').addClass('bg-gray-800 text-gray-100');
-    $('#theme').html( localStorage.getItem('darktheme') !== 'false' ? THEMES.light : THEMES.dark );
-    localStorage.setItem( 'darktheme' , localStorage.getItem('darktheme') !== 'false' ? 'false' : ' true' );   
-})
+// $('#theme').on('click', ()=>{
+//     localStorage.getItem('darktheme') != 'false' ? $('body').removeClass('bg-gray-800 text-gray-100') : $('body').addClass('bg-gray-800 text-gray-100');
+//     $('#theme').html( localStorage.getItem('darktheme') !== 'false' ? THEMES.light : THEMES.dark );
+//     localStorage.setItem( 'darktheme' , localStorage.getItem('darktheme') !== 'false' ? 'false' : ' true' );   
+// })
 
 let toogled = false;
 document.getElementById('toggleSidebar').addEventListener('click', function () {
