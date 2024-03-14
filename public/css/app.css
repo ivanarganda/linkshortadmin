@@ -4,7 +4,7 @@
 }
 
 body {
-    background-image: url('https://demo.tailadmin.com/src/images/cover/cover-03.jpg');
+    background-image: url('../images/body.jpg');
     background-attachment: fixed;
     background-repeat:no-repeat;
     background-size: cover;

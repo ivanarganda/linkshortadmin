@@ -22,15 +22,20 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
-Route::get('/users/{search?}', [UsersController::class, 'index']);
+Route::get('/users/{search?}', [UsersController::class, 'index'])->name('users');
 Route::get('/users/details/{detail}', [UsersController::class, 'show']);
+Route::post('/users/update/{id}', [UsersController::class, 'update']);
+Route::get('/users/delete/{id}', [UsersController::class, 'delete']);
 
-Route::resource('/urls', UrlsController::class);
+Route::get('/urls/{search?}', [UrlsController::class , 'index'])->name('urls');
+Route::get('/urls/details/{detail}', [UrlsController::class, 'details']);
+Route::post('/urls/update/{id}', [UrlsController::class, 'update']);
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/stats/{search?}', [ StatsController::class , 'index' ]);
+
 Route::get('/settings/{id?}', [ SettingsController::class , 'index' ]);
 Route::get('/settings/delete/{id}', [ SettingsController::class , 'delete' ]);

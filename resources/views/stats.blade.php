@@ -31,9 +31,9 @@
                             <p class="text-3xl flex flex-row mt-1 font-semibold">
                                 <span>{{ $users->users_registered_this_month }}</span>
                                 @if ($users->users_registered_last_month > $users->users_registered_this_month)
-                                    {!! $svgDownArrow !!}
+                                    {!! Icons::Icon('icon-arrow-down') !!}
                                 @else
-                                    {!! $svgUpArrow !!}
+                                    {!! Icons::Icon('icon-arrow-up') !!}
                                 @endif
                             </p>
                             <p class="text-sm mt-1 font-semibold">Last month:{{ $users->users_registered_last_month }}
@@ -62,9 +62,9 @@
                             <p class="text-3xl flex flex-row mt-1 font-semibold">
                                 <span>{{ $redirects['yesterday']->Today }}</span>
                                 @if ($redirects['yesterday']->Yesterday > $redirects['yesterday']->Today)
-                                    {!! $svgDownArrow !!}
+                                    {!! Icons::Icon('icon-arrow-down') !!}
                                 @else
-                                    {!! $svgUpArrow !!}
+                                    {!! Icons::Icon('icon-arrow-up') !!}
                                 @endif
                             </p>
                             <p class="text-sm mt-1 font-semibold">Yesterday:{{ $redirects['yesterday']->Yesterday }}
@@ -92,9 +92,9 @@
                             <p class="text-3xl flex flex-row mt-1 font-semibold">
                                 <span>{{ $redirects['last_month']->ThisMonth }}</span>
                                 @if ($redirects['last_month']->LastMonth > $redirects['last_month']->ThisMonth)
-                                    {!! $svgDownArrow !!}
+                                    {!! Icons::Icon('icon-arrow-down') !!}
                                 @else
-                                    {!! $svgUpArrow !!}
+                                    {!! Icons::Icon('icon-arrow-up') !!}
                                 @endif
                             </p>
                             <p class="text-sm mt-1 font-semibold">Last month:{{ $redirects['last_month']->LastMonth }}

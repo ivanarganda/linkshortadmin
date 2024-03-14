@@ -7,33 +7,38 @@ use App\Charts\StadisticUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\User;
 
 class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index( $search = false )
+    public function index()
     {
 
         if ( !Auth::check() ){
             return redirect()->intended('/');
         }
+
+        $search = $this->params['search'];
         
         // Retrieve users grouped by registration date
         $users = !$search ? 
             DB::table('users')
-            ->select(DB::raw('DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date, id , name , email, type'))
+            ->select(DB::raw('DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date, id , name , email, type , updated_at'))
             ->where( 'type' , 'user' )
             ->paginate(5) : 
-            
             DB::table('users')
-            ->select(DB::raw('DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date, id , name , email, type'))
-            ->where('id', 'LIKE' , "%{$search}%")
-            ->orWhere('name', 'LIKE' , "%{$search}%")
-            ->orWhere('email', 'LIKE' , "%{$search}%")
+            ->select(DB::raw('DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date'), 'id', 'name', 'email', 'type', 'updated_at')
             ->where('type', 'user')
+            ->where(function($query) use ($search) {
+                $query->where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
+            })
             ->paginate(5);
+
 
         // Fetch the email of the authenticated user
         $authenticatedUserEmail = Auth::user()->email;
@@ -51,40 +56,7 @@ class UsersController extends Controller
         $styles = $this->styles;
 
         // Pass the users data along with labels and data to the view
-        return view('users', compact('labels', 'data' , 'users' , 'styles'));
-    }
-    
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return view('users', compact('labels', 'data' , 'users' , 'styles' ));
     }
 
     /**
@@ -92,14 +64,34 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        // dd( $request->all() );
+        // die();
+        // Step 1: Find the record you want to update
+        $user = User::findOrFail($id);
+
+        // Step 2: Update the record with the new values
+        $user->update($request->all());
+
+        // Optionally, you can perform additional validation or manipulation here before saving
+
+        // Step 3: Save the changes to the database
+        $user->save();
+
+        // Optionally, you can return a response indicating success
+        return redirect()->route('users');
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function delete(string $id){
+        // Step 1: Find the record you want to delete
+        $user = User::findOrFail($id);
+
+        // Step 2: Delete the record from the database
+        $user->delete();
+
+        // Optionally, you can return a response indicating success
+        return redirect()->route('users');
     }
+    
 }

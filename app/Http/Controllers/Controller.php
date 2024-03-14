@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Url;
 use App\Models\Redirect;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Icons;
 
 class Controller extends BaseController
 {
@@ -18,7 +19,8 @@ class Controller extends BaseController
 
     public function __construct(){
         $this->params = [
-            'short' => isset( $_GET['short'] ) ? $_GET['short'] : null
+            'short' => isset( $_GET['short'] ) ? $_GET['short'] : null,
+            'search' => isset( $_GET['search'] ) ? $_GET['search'] : false
         ];
         $this->styles = [
             'sections' => [
