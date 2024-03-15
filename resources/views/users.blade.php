@@ -24,54 +24,8 @@
             class="flex mt-1 mb-5 w-full lg:w-3/4 h-96 border border-gray-300 rounded-md shadow-md p-6">
             <canvas class="h-full" id="myChart"></canvas>
         </section>
-        <section {!! $styles['sections']['background'] !!}
-            class="relative hidden lg:block w-full rounded-lg lg:w-3/4 border border-gray-300 rounded-md shadow-md p-6">
-            <table id="table-users" class="w-full caption-bottom text-sm flex-grow">
-                <thead class="bg-blue-500">
-                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                        <th
-                            class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                            Name
-                        </th>
-                        <th
-                            class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                            Email
-                        </th>
-                        <th
-                            class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                            Role
-                        </th>
-                        <th
-                            class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                            Registered
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody class="[&_tr:last-child]:border-0">
-                    @foreach ($users as $user)
-                    <tr id="{{ $user->email }}" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                        <td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">{{ $user->name }}</td>
-                        <td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">{{ $user->email }}</td>
-                        <td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">{{ $user->type }}</td>
-                        <td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">{{ $user->registration_date }}</td>
-                        <td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">
-                            <label class="cursor-pointer" for="edit{{$user->id}}">{!!Icons::Icon('icon-edit')!!}</label>
-                            <input hidden type="button" onclick="window.location.href = '{{ url('users?data=' . base64_encode(json_encode([
-                                'id' => $user->id,
-                                'name' => $user->name,
-                                'email' => $user->email,
-                                'type' => $user->type,
-                                'created_at' => $user->registration_date,
-                                'updated_at' => $user->updated_at,
-                            ]))) }}'" id="edit{{$user->id}}" value="Edit" />
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>                
-            </table>
-        </section>
-        <section {!! $styles['sections']['background'] !!}
+        {!!$table!!}
+        {{-- <section {!! $styles['sections']['background'] !!}
             class="relative block lg:hidden w-full rounded-lg lg:w-3/4 border border-gray-300 rounded-md shadow-md p-6">
             <table id="table-users-mobile" class="w-full caption-bottom text-sm">
                 <tbody class="[&amp;_tr:last-child]:border-0 relative">
@@ -117,26 +71,8 @@
                     @endforeach
                 </tbody>
             </table>
-        </section>
-        <nav role="navigation" aria-label="pagination" class="mx-auto flex w-full justify-center mt-6">
-            <ul class="flex flex-row items-center gap-1">
-                <!-- Previous page link -->
-                <li>
-                    <a href="{{ $users->previousPageUrl() }}" class="pagination-link">&laquo; Previous</a>
-                </li>
-                <!-- Pagination elements -->
-                @for ($i = 1; $i <= $users->lastPage(); $i++)
-                    <li>
-                        <a href="{{ $users->url($i) }}"
-                            class="pagination-link{{ $i == $users->currentPage() ? ' active' : '' }}">{{ $i }}</a>
-                    </li>
-                @endfor
-                <!-- Next page link -->
-                <li>
-                    <a href="{{ $users->nextPageUrl() }}" class="pagination-link">Next &raquo;</a>
-                </li>
-            </ul>
-        </nav>
+        </section> --}}
+        {!!$pagination!!}
     </div>
     <script type="module" defer>
         generateChart(

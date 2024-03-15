@@ -26,11 +26,11 @@ class UsersController extends Controller
         // Retrieve users grouped by registration date
         $users = !$search ? 
             DB::table('users')
-            ->select(DB::raw('DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date, id , name , email, type , updated_at'))
+            ->select(DB::raw('id , name , email, type , DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date, updated_at'))
             ->where( 'type' , 'user' )
             ->paginate(5) : 
             DB::table('users')
-            ->select(DB::raw('DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date'), 'id', 'name', 'email', 'type', 'updated_at')
+            ->select(DB::raw('id , name , email, type , DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date, updated_at'))
             ->where('type', 'user')
             ->where(function($query) use ($search) {
                 $query->where('id', 'LIKE', "%{$search}%")
@@ -55,8 +55,12 @@ class UsersController extends Controller
 
         $styles = $this->styles;
 
+        $table = $this->generateTable( $users , 'users' , 'pc' );
+
+        $pagination = $this->generatePagination($users);
+
         // Pass the users data along with labels and data to the view
-        return view('users', compact('labels', 'data' , 'users' , 'styles' ));
+        return view('users', compact('labels', 'data' , 'table' , 'pagination' , 'styles' ));
     }
 
     /**

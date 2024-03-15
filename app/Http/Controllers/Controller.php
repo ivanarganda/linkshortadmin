@@ -18,6 +18,7 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
     public function __construct(){
+
         $this->params = [
             'short' => isset( $_GET['short'] ) ? $_GET['short'] : null,
             'search' => isset( $_GET['search'] ) ? $_GET['search'] : false
@@ -27,10 +28,131 @@ class Controller extends BaseController
                 'background' => 'style="background: rgba(255, 255, 255, 0.9)"'
             ]
         ];
+
+        $this->isMobile = isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/(iPhone|iPad|iPod|Android|BlackBerry|IEMobile|Opera Mini)/', $_SERVER['HTTP_USER_AGENT']);
+
+    }
+
+    public function generateDeleteButton($id) {
+    
+        return '<td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">
+                <label class="cursor-pointer" for="delete'.$id.'">'.Icons::Icon('icon-trash').'</label>
+                <input hidden type="button" onclick="window.location.href = \'users/delete/'.$id.'\'" id="edit'.$id.'" value="Edit" />
+            </td>';
+
+    }
+
+
+    public function generateEditButton($url, $data) {
+    
+        $content_data = [];
+    
+        foreach ($data as $key => $d) {
+            $content_data[$key] = $d;
+        }
+    
+        return '<td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">
+                <label class="cursor-pointer" for="edit'.$content_data['id'].'">'.Icons::Icon('icon-edit').'</label>
+                <input hidden type="button" onclick="window.location.href = \''.$url.'?data=' . base64_encode(json_encode($content_data)).'\'" id="edit'.$content_data['id'].'" value="Edit" />
+            </td>';
+
+    }
+
+    /*
+    *
+        *   @method generatePagination 
+        *   @params data
+    *
+    */
+    public function generatePagination( $data ){
+        return "<nav role='navigation' aria-label='pagination' class='mx-auto flex w-full justify-center mt-6'>
+            <ul class='flex flex-row items-center gap-1'>
+                <!-- Previous page link -->
+                <li>
+                    <a href='{$data->previousPageUrl()}' class='pagination-link'>&laquo; Previous</a>
+                </li>
+                <!-- Pagination elements -->
+                " . 
+                implode('', array_map(function($i) use ($data) {
+                    return "<li>
+                                <a href='{$data->url($i)}' class='pagination-link" . ($i == $data->currentPage() ? ' active' : '') . "'>$i</a>
+                            </li>";
+                }, range(1, $data->lastPage()))) . "
+                <!-- Next page link -->
+                <li>
+                    <a href='{$data->nextPageUrl()}' class='pagination-link'>Next &raquo;</a>
+                </li>
+            </ul>
+        </nav>";
+
+    }
+
+    /*
+    *
+        *   @method generateTable 
+        *   @params table name of the table to generate
+        *   @params type of the table to generate
+        *   @screen of render if pc , tablet or movile
+    *
+    */
+    public function generateTable( $data , $type , $screen ){
+        
+        $content_table = '';
+        $table = '';
+
+        $columns = [];
+
+        foreach ($data[0] as $key => $d) {
+            $columns[] = $key;
+        }
+
+        if ( $screen == 'pc' ){
+
+            foreach ($data as $item) {
+                $content_table .= '<tr id="' . $item->email . '" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">';
+                
+                foreach ($columns as $column) {
+                    $content_table .= '<td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">' . $item->$column . '</td>';
+                }
+        
+                $content_table .= $this->generateEditButton( $type , $item);
+
+                $content_table .= $this->generateDeleteButton( $item->id );
+        
+                $content_table .= '</tr>';
+            }
+
+            $heading_table = '<tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">';
+
+            foreach ($columns as $key => $col) {
+                $heading_table.= '<th class="h-12 px-4 text-left text-lg text-gray-100 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                        '.$col.'
+                    </th>';
+            }
+
+            $heading_table.= '</tr>';
+
+        } else {
+            
+        }
+
+        $table = "<section {$this->styles['sections']['background']} class='relative hidden lg:block w-full rounded-lg lg:w-3/4 border border-gray-300 rounded-md shadow-md p-6'>
+            <table id='table-users' class='w-full caption-bottom text-sm flex-grow'>
+                <thead class='bg-blue-500'>
+                    {$heading_table}
+                </thead>
+                <tbody class='[&_tr:last-child]:border-0'>
+                    {$content_table}
+                </tbody>                
+            </table>
+        </section>";
+    
+        return $table;
+
     }
 
     public function getDate( $day , $month , $year ) {
-
+ 
         $date = Carbon::now();
     
         // Extract current month, day, and year

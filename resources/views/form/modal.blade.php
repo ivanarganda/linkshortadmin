@@ -18,13 +18,13 @@
                 @endif
                 <div class="flex items-center space-x-4">
                     <label class="text-sm capitalize font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 w-20" for="{{$key}}">
-                        @if ($key === 'created_at' || $key === 'updated_at')
+                        @if ($key === 'created_at' || $key == 'registration_date' || $key === 'updated_at')
                         Registration
                         @else
                         {{$key}}
                         @endif
                     </label>
-                    @if ($key === 'created_at')
+                    @if ($key === 'created_at' || $key == 'registration_date')
                         @php 
                             $dateString = $data;
                             $formattedDate = trim(date('Y-m-d', strtotime(str_replace(array('of','in'),array('',''), $dateString))));
