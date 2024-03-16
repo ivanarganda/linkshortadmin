@@ -6,7 +6,7 @@
     @endif
 @endauth
 <header class="flex items-center shadow-xl justify-between px-6 py-4 z-20 text-white fixed w-full top-0" style="background: rgba(1, 1, 20, 0.5)">
-    <button id="toggleSidebar" class="block md:hidden w-40 text-white">
+    <button id="toggleSidebar" class="block lg:hidden w-40 text-white">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M3 4a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm0 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm0 5a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1z" clip-rule="evenodd" />
         </svg>

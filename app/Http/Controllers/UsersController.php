@@ -55,7 +55,7 @@ class UsersController extends Controller
 
         $styles = $this->styles;
 
-        $table = $this->generateTable( $users , 'users' , 'pc' );
+        $table = $this->generateTable( $users , 'users' );
 
         $pagination = $this->generatePagination($users);
 

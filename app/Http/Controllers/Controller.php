@@ -95,7 +95,7 @@ class Controller extends BaseController
         *   @screen of render if pc , tablet or movile
     *
     */
-    public function generateTable( $data , $type , $screen ){
+    public function generateTable( $data , $type ){
         
         $content_table = '';
         $table = '';
@@ -106,7 +106,7 @@ class Controller extends BaseController
             $columns[] = $key;
         }
 
-        if ( $screen == 'pc' ){
+        if ( !$this->isMobile ){
 
             foreach ($data as $item) {
                 $content_table .= '<tr id="' . $item->email . '" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">';
@@ -132,20 +132,43 @@ class Controller extends BaseController
 
             $heading_table.= '</tr>';
 
-        } else {
-            
-        }
+            $table = "<section {$this->styles['sections']['background']} class='relative hidden lg:block w-full rounded-lg lg:w-3/4 border border-gray-300 rounded-md shadow-md p-6'>
+                <table id='table-users' class='w-full caption-bottom text-sm flex-grow'>
+                    <thead class='bg-blue-500'>
+                        {$heading_table}
+                    </thead>
+                    <tbody class='[&_tr:last-child]:border-0'>
+                        {$content_table}
+                    </tbody>                
+                </table>
+            </section>";
 
-        $table = "<section {$this->styles['sections']['background']} class='relative hidden lg:block w-full rounded-lg lg:w-3/4 border border-gray-300 rounded-md shadow-md p-6'>
-            <table id='table-users' class='w-full caption-bottom text-sm flex-grow'>
-                <thead class='bg-blue-500'>
-                    {$heading_table}
-                </thead>
-                <tbody class='[&_tr:last-child]:border-0'>
-                    {$content_table}
-                </tbody>                
-            </table>
-        </section>";
+        } else {
+
+            foreach ($data as $item) {
+                
+                foreach ($columns as $column) {
+                    $content_table.= '<tr id="' . $item->email . '" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                        <th class="h-12 px-4 text-left text-lg text-gray-500 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                '.$column.'
+                            </th>';
+                    $content_table .= '<td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">' . $item->$column . '</td></tr>';
+                }
+        
+                $content_table .= $this->generateEditButton( $type , $item);
+
+                $content_table .= $this->generateDeleteButton( $item->id );
+    
+            }
+
+            $table = "<section {$this->styles['sections']['background']} class='relative block lg:hidden w-full rounded-lg lg:w-3/4 border border-gray-300 rounded-md shadow-md p-6'>
+                <table id='table-users' class='w-full caption-bottom text-sm flex-grow'>
+                    <tbody class='[&_tr:last-child]:border-0'>
+                        {$content_table}
+                    </tbody>                
+                </table>
+            </section>";
+        }
     
         return $table;
 
