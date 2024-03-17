@@ -19,6 +19,8 @@ class Controller extends BaseController
 
     public function __construct(){
 
+        session_start();
+
         $this->params = [
             'short' => isset( $_GET['short'] ) ? $_GET['short'] : null,
             'search' => isset( $_GET['search'] ) ? $_GET['search'] : false
@@ -29,7 +31,7 @@ class Controller extends BaseController
             ]
         ];
 
-        $this->isMobile = isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/(iPhone|iPad|iPod|Android|BlackBerry|IEMobile|Opera Mini)/', $_SERVER['HTTP_USER_AGENT']);
+        $this->windowSize = $_SESSION['windowSize'] ?? [];
 
     }
 
@@ -65,6 +67,7 @@ class Controller extends BaseController
     *
     */
     public function generatePagination( $data ){
+        
         return "<nav role='navigation' aria-label='pagination' class='mx-auto flex w-full justify-center mt-6'>
             <ul class='flex flex-row items-center gap-1'>
                 <!-- Previous page link -->
@@ -106,18 +109,20 @@ class Controller extends BaseController
             $columns[] = $key;
         }
 
-        if ( !$this->isMobile ){
+        if ( $this->windowSize['width'] >= 1024 ){
+
+            // Generate table for pc
 
             foreach ($data as $item) {
-                $content_table .= '<tr id="' . $item->email . '" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">';
+                $content_table .= '<tr id="' . $item->id . '" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">';
                 
                 foreach ($columns as $column) {
                     $content_table .= '<td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">' . $item->$column . '</td>';
                 }
         
-                $content_table .= $this->generateEditButton( $type , $item);
+                $content_table .= '<td>' . $this->generateEditButton( $type , $item).'</td>';
 
-                $content_table .= $this->generateDeleteButton( $item->id );
+                $content_table .= '<td>' . $this->generateDeleteButton( $item->id ) . '</td>';
         
                 $content_table .= '</tr>';
             }
@@ -132,45 +137,48 @@ class Controller extends BaseController
 
             $heading_table.= '</tr>';
 
-            $table = "<section {$this->styles['sections']['background']} class='relative hidden lg:block w-full rounded-lg lg:w-3/4 border border-gray-300 rounded-md shadow-md p-6'>
-                <table id='table-users' class='w-full caption-bottom text-sm flex-grow'>
-                    <thead class='bg-blue-500'>
+            $table = "<thead class='w-full bg-blue-500'>
                         {$heading_table}
                     </thead>
-                    <tbody class='[&_tr:last-child]:border-0'>
+                    <tbody class='w-full tr:last-child:border-none'>
                         {$content_table}
-                    </tbody>                
-                </table>
-            </section>";
+                    </tbody>";
 
         } else {
 
+            // Generate table for mobile tablet or mobile
             foreach ($data as $item) {
                 
                 foreach ($columns as $column) {
-                    $content_table.= '<tr id="' . $item->email . '" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                        <th class="h-12 px-4 text-left text-lg text-gray-500 align-middle font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                '.$column.'
-                            </th>';
-                    $content_table .= '<td class="p-4 text-gray-600 align-middle [&:has([role=checkbox])]:pr-0">' . $item->$column . '</td></tr>';
-                }
-        
-                $content_table .= $this->generateEditButton( $type , $item);
+                    $content_table.= '<tr id="' . $item->id . '" class="w-full border-b flex flex-row justify-center items-center transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">';
 
-                $content_table .= $this->generateDeleteButton( $item->id );
+                    $content_table .= '<th class="w-full h-12 flex flex-row items-center justify-start px-4 text-lg text-gray-500 align-center font-medium font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                        '.$column.'
+                    </th>';
+                    $content_table .= '<td class="w-full p-4 flex flex-row items-center justify-center text-gray-600 align-center [&:has([role=checkbox])]:pr-0">' . $item->$column . '</td>';
+                    $content_table .= '</tr>';
+                }
+
+                $content_table .= '<tr class="border-b flex flex-row justify-center items-center">';
+        
+                $content_table .= '<td>' . $this->generateEditButton( $type , $item).'</td>';
+
+                $content_table .= '<td>' . $this->generateDeleteButton( $item->id ) . '</td>';
+
+                $content_table .= '</tr>';
     
             }
 
-            $table = "<section {$this->styles['sections']['background']} class='relative block lg:hidden w-full rounded-lg lg:w-3/4 border border-gray-300 rounded-md shadow-md p-6'>
-                <table id='table-users' class='w-full caption-bottom text-sm flex-grow'>
-                    <tbody class='[&_tr:last-child]:border-0'>
+            $table = "<tbody class='w-2/4 m-auto [&_tr:last-child]:border-0 flex flex-col justify-center'>
                         {$content_table}
-                    </tbody>                
-                </table>
-            </section>";
+                    </tbody>";
         }
     
-        return $table;
+        return "<section {$this->styles['sections']['background']} class='relative ".( $this->windowSize['width'] <= 1024 ? 'block lg:hidden' : 'hidden lg:block' )." w-full rounded-lg lg:w-4/5 border border-gray-300 mx-auto rounded-md shadow-md p-6'>
+            <table id='table-users' class='w-full caption-bottom text-sm'>
+                $table
+            </table>
+        </section>";
 
     }
 

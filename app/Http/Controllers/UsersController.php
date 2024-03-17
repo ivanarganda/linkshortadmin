@@ -55,8 +55,8 @@ class UsersController extends Controller
 
         $styles = $this->styles;
 
+        // Generate table and pagination
         $table = $this->generateTable( $users , 'users' );
-
         $pagination = $this->generatePagination($users);
 
         // Pass the users data along with labels and data to the view

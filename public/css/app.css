@@ -1,6 +1,8 @@
 * {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    scroll-behavior: smooth;
+    -webkit-scroll-behavior: smooth;
 }
 
 body {
@@ -8,6 +10,7 @@ body {
     background-attachment: fixed;
     background-repeat:no-repeat;
     background-size: cover;
+    
 }
 
 .pagination-item {

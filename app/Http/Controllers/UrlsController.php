@@ -22,47 +22,19 @@ class UrlsController extends Controller
 
         // Get URLs associated with the authenticated user
         $urls = DB::table('urls')
-        ->select(DB::raw('DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date, url , short, description'))
+        ->select(DB::raw('id,url , short, description,DATE_FORMAT(created_at, "%d of %M in %Y") as registration_date,updated_at'))
         ->paginate(5);
 
         [ $labels , $data ] = $this->generateChart('urls');
 
         $styles = $this->styles;
 
+        // Generate table and pagination
+        $table = $this->generateTable( $urls , 'urls' );
+        $pagination = $this->generatePagination($urls);
+
         // Return the view with the URLs
-        return view('urls', compact( 'labels' , 'data' , 'urls' , 'styles'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return view('urls', compact( 'labels' , 'data' , 'table' , 'pagination' , 'styles'));
     }
 
     /**
@@ -73,11 +45,4 @@ class UrlsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
